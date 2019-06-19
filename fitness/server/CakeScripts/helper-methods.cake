@@ -11,6 +11,7 @@ public class Configuration
     public string WebsiteRoot {get;set;}
     public string XConnectRoot {get;set;}
     public string XConnectIndexerRoot {get;set;}
+	public string XConnectAutomationServiceRoot {get;set;}
     public string InstanceUrl {get;set;}
     public string SolutionName {get;set;}
     public string ProjectFolder {get;set;}
@@ -18,6 +19,7 @@ public class Configuration
     public string MessageStatisticsApiKey {get;set;}
     public string MarketingDefinitionsApiKey {get;set;}
     public bool RunCleanBuilds {get;set;}
+	public bool KioskAppDeploy {get;set;}
 	public int DeployExmTimeout {get;set;}
     public string BuildToolVersions 
     {
@@ -71,11 +73,15 @@ public void PrintHeader(ConsoleColor foregroundColor)
 public void PublishProjects(string rootFolder, string websiteRoot)
 {
 	cakeConsole.WriteLine(rootFolder);
+	
+    Func<IFileSystemInfo, bool> excludedProjects = fileSystemInfo => !fileSystemInfo.Path.FullPath.Contains("Fitness.Automation.Plugins");
 
-    var projects = GetFiles($"{rootFolder}\\**\\*.csproj");
+    var projects = GetFiles($"{rootFolder}\\**\\*.csproj", excludedProjects);
 
     foreach (var project in projects)
     {
+		Information($"Publishing project {project}");
+
         MSBuild(project, cfg => InitializeMSBuildSettings(cfg)
                                    .WithTarget(configuration.BuildTargets)
                                    .WithProperty("DeployOnBuild", "true")
@@ -83,9 +89,7 @@ public void PublishProjects(string rootFolder, string websiteRoot)
                                    .WithProperty("WebPublishMethod", "FileSystem")
                                    .WithProperty("DeleteExistingFiles", "false")
                                    .WithProperty("publishUrl", websiteRoot)
-                                   .WithProperty("BuildProjectReferences", "false")
-								   .WithProperty("DeployXConnectTarget", configuration.XConnectRoot)
-								   .WithProperty("DeployIndexingTarget", configuration.XConnectIndexerRoot));
+                                   .WithProperty("BuildProjectReferences", "false"));
     }
 }
 
@@ -93,12 +97,13 @@ public FilePathCollection GetTransformFiles(string rootFolder)
 {
     Func<IFileSystemInfo, bool> exclude_obj_bin_folder =fileSystemInfo => !fileSystemInfo.Path.FullPath.Contains("/obj/") || !fileSystemInfo.Path.FullPath.Contains("/bin/");
 
+	Information($"Collecting transforms from: {rootFolder}");
     var xdtFiles = GetFiles($"{rootFolder}\\**\\*.xdt", exclude_obj_bin_folder);
 
     return xdtFiles;
 }
 
-public void Transform(string rootFolder) {
+public void Transform(string rootFolder, string destinationRootFolder) {
     var xdtFiles = GetTransformFiles(rootFolder);
 
     foreach (var file in xdtFiles)
@@ -106,14 +111,18 @@ public void Transform(string rootFolder) {
         Information($"Applying configuration transform:{file.FullPath}");
         var fileToTransform = Regex.Replace(file.FullPath, ".+/(.+)/*.xdt", "$1");
         fileToTransform = Regex.Replace(fileToTransform, ".sc-internal", "");
-        var sourceTransform = $"{configuration.WebsiteRoot}\\{fileToTransform}";
+        var sourceTransform = $"{destinationRootFolder}\\{fileToTransform}";
         
         XdtTransformConfig(sourceTransform			                // Source File
                             , file.FullPath			                // Tranforms file (*.xdt)
                             , sourceTransform);		                // Target File
     }
 }
-
+public void DeployFiles(string source, string destination){
+    var files = GetFiles($"{source}");
+        EnsureDirectoryExists(destination);
+        CopyFiles(files, destination);
+}
 public void RebuildIndex(string indexName)
 {
     var url = $"{configuration.InstanceUrl}utilities/indexrebuild.aspx?index={indexName}";

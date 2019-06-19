@@ -7,6 +7,7 @@ import {
   setDemographicsFacet,
   setDemographicsProfile
 } from "../../services/DemographicsService";
+import { trackCompleteDemographics } from "../../services/TrackingService";
 
 class PersonalDataStep extends Component {
   state = {
@@ -31,20 +32,16 @@ class PersonalDataStep extends Component {
   handleContinueClick(event) {
     const { age, gender } = this.state;
     setDemographicsFacet(age, gender)
-      .then(response => {
-        console.log(response.data);
-      })
       .catch(err => {
         console.log(err);
       });
 
     setDemographicsProfile(age, gender)
-      .then(response => {
-        console.log(response.data);
-      })
       .catch(err => {
         console.log(err);
       });
+
+    trackCompleteDemographics();
   }
 
   render() {

@@ -34,7 +34,6 @@ class Navigation extends React.Component {
     flush()
       .then(response => {
         this.toggle();
-        console.log(response.data);
       })
       .catch(err => {
         console.error(err);
@@ -66,6 +65,26 @@ class Navigation extends React.Component {
           />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
+              <NavItem>
+                <NavLink
+                  tag={Link}
+                  to={"/events"}
+                  onClick={() => this.nav("/events")}
+                  className="nav-link"
+                >
+                  {t("all-events")}
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  tag={Link}
+                  to={"/my-events"}
+                  onClick={() => this.nav("/my-events")}
+                  className="nav-link"
+                >
+                  {t("my-events")}
+                </NavLink>
+              </NavItem>
               <NavItem>
                 <NavLink
                   tag={Link}

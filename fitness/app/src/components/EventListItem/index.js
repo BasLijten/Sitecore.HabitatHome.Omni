@@ -10,12 +10,15 @@ import { NavLink } from "react-router-dom";
 import { translate } from "react-i18next";
 import EventLabels from "../EventLabels";
 
-const EventListItem = ({ id, label, fields, url, featured, t }) => {
-  // url may not be resolved in connected mode befor RCR is set on EventList component
-  // so need to be using id temporarily see https://github.com/Sitecore/jss/issues/69
-  if (!url) {
-    url = id;
-  }
+const EventListItem = ({
+  fields,
+  url,
+  label,
+  featured,
+  showDescription,
+  showMetatags,
+  badge
+}) => {
   return (
     <div className={`events-item ${featured ? "events-item_featured" : ""}`}>
       <div className="events-item-image-container">
@@ -25,28 +28,32 @@ const EventListItem = ({ id, label, fields, url, featured, t }) => {
               field={fields.image}
               srcSet={[{ mw: 650 }, { mw: 350 }]}
               sizes="(min-width: 960px) 650px, 350px"
+              style={null}
               width={null}
               height={null}
             />
           </NavLink>
         </div>
-        <div className="events-item-image-overlay">
-          <div className="events-item-image-overlay-content">
-            <div className="events-item-metas">
-              {featured && (
-                <Text
-                  field={label}
-                  tag="p"
-                  className="events-item-meta events-item-meta_recommended"
+        {showMetatags && (
+          <div className="events-item-image-overlay">
+            <div className="events-item-image-overlay-content">
+              <div className="events-item-metas">
+                {featured && (
+                  <Text
+                    field={label}
+                    tag="p"
+                    className="events-item-meta events-item-meta_recommended"
+                  />
+                )}
+                <EventLabels
+                  labels={fields.labels}
+                  className="events-item-meta events-item-meta_type"
                 />
-              )}
-              <EventLabels
-                labels={fields.labels}
-                className="events-item-meta events-item-meta_type"
-              />
+              </div>
             </div>
           </div>
-        </div>
+        )}
+        <div className="eventDetail-image-overlay-badges">{badge}</div>
       </div>
       <div className="events-item-content">
         <div className="events-item-content-inner">
@@ -59,11 +66,13 @@ const EventListItem = ({ id, label, fields, url, featured, t }) => {
             className="events-item-date"
             render={date => dayjs(date).format("MMM D YYYY")}
           />
-          <RichText
-            field={fields.description}
-            tag="p"
-            className="events-item-name-description"
-          />
+          {showDescription && (
+            <RichText
+              field={fields.description}
+              tag="p"
+              className="events-item-name-description"
+            />
+          )}
         </div>
       </div>
     </div>
@@ -71,7 +80,9 @@ const EventListItem = ({ id, label, fields, url, featured, t }) => {
 };
 
 EventListItem.defaultProps = {
-  fields: {}
+  fields: {},
+  showDescription: true,
+  showMetatags: true
 };
 
 export default translate()(EventListItem);
