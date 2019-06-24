@@ -23,6 +23,11 @@ jobs:
   #    npm run jss "setup --instancePath c:\bla --layoutServiceHost https://sitecore9 --apiKey bla"
     displayName: 'npm install and jss setup'
 
+  - task: PublishPipelineArtifact@0
+    inputs:
+      artifactName: 'drop1' 
+      targetPath: fitness/app/build/ 
+
 - job: Windows
   pool:
     vmImage: 'vs2017-win2016'
