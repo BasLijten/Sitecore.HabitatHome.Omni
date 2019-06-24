@@ -16,6 +16,7 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
+    cd fitness\app
     npm install
     jss setup
   displayName: 'npm install and jss setup'
