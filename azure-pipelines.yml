@@ -18,6 +18,6 @@ steps:
 - script: |
     cd fitness/app
     npm install
-    jss build
+    npm run jss build
 #    npm run jss "setup --instancePath c:\bla --layoutServiceHost https://sitecore9 --apiKey bla"
   displayName: 'npm install and jss setup'
