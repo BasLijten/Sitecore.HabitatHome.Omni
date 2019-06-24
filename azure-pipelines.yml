@@ -25,7 +25,7 @@ jobs:
 
 - job: Windows
   pool:
-    vmImage: 'Windows'
+    vmImage: 'VS2017'
   steps:
   - task: NodeTool@0
     inputs:
