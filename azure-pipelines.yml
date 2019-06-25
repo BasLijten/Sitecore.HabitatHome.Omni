@@ -36,7 +36,7 @@ stages:
   - deployment: DeployTest1
     pool:
       vmImage: 'vs2017-win2016'
-    environment: Test environment 1
+    environment: Test environment 1 - CD
     strategy:
       runOnce:
         deploy: 
@@ -47,12 +47,13 @@ stages:
           - script: |
               echo Add other tasks to build, test, and deploy your project.
               echo See https://aka.ms/yaml
+              sleep 60
             displayName: 'Run a multi-line script'
    
   - deployment: DeployTest2
     pool:
       vmImage: 'vs2017-win2016'
-    environment: Test environment 2 
+    environment: Test environment 1 - CM
     strategy:
       runOnce:
         deploy: 
@@ -63,6 +64,7 @@ stages:
           - script: |
               echo Add other tasks to build, test, and deploy your project.
               echo See https://aka.ms/yaml
+              sleep 60
             displayName: 'Run a multi-line script'
 
 - stage: DeployParallelTests
