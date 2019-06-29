@@ -31,23 +31,23 @@ stages:
       vmImage: 'ubuntu-latest'
   - template: templates/static-build-jobs-template.yml
     parameters:
-      name: BuildFrontEndWindows
+      name: BuildFrontEndWindows1
       vmImage: 'vs2017-win2016'
   - template: templates/static-build-jobs-template.yml
     parameters:
-      name: BuildFrontEndWindows
+      name: BuildFrontEndWindows2
       vmImage: 'vs2017-win2016'
   - template: templates/static-build-jobs-template.yml
     parameters:
-      name: BuildFrontEndWindows
+      name: BuildFrontEndWindows3
       vmImage: 'vs2017-win2016'
   - template: templates/static-build-jobs-template.yml
     parameters:
-      name: BuildFrontEndWindows
+      name: BuildFrontEndWindows4
       vmImage: 'vs2017-win2016'
   - template: templates/static-build-jobs-template.yml
     parameters:
-      name: BuildFrontEndWindows
+      name: BuildFrontEndWindows5
       vmImage: 'vs2017-win2016'
 
 
