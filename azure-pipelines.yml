@@ -9,6 +9,14 @@ trigger:
 stages:
 - stage: Build
   jobs:
+  - template: templates/static-build-jobs-template.yml
+    parameters:
+      name: BuildFrontEndUbuntu
+      vmImage: 'ubuntu-latest'
+  - template: templates/static-build-jobs-template.yml
+    parameters:
+      name: BuildFrontEndWindows
+      vmImage: 'vs2017-win2016'
   - job: Linux
     pool:
       vmImage: 'ubuntu-latest'

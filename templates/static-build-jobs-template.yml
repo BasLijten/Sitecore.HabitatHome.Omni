@@ -1,0 +1,10 @@
+parameters:
+  name: ''
+  vmImage: ''
+
+jobs:
+- job: '${{ parameters.name }}'
+  pool:
+    vmImage: '${{ parameters.vmImage }}'
+  steps:
+  - template: static-build-steps-template.yml

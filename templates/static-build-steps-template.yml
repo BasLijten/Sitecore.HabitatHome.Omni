@@ -1,0 +1,43 @@
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    cd fitness/app
+    npm install
+    npm run jss build
+#    npm run jss "setup --instancePath c:\bla --layoutServiceHost https://sitecore9 --apiKey bla"
+  displayName: 'npm install and jss setup'
+
+# - task: PublishPipelineArtifact@0
+#   inputs:
+#     artifactName: 'drop1' 
+#     targetPath: fitness/app/build/ 
+    # - task: Npm@1
+    #   displayName: '[static] npm install'
+    #   inputs: 
+    #     workingDir: client/static
+    #     verbose: false
+    # - task: Npm@1
+    #   displayName: '[static] npm run lint'
+    #   inputs:
+    #     command: custom
+    #     workingDir: client/static
+    #     verbose: false
+    #     customCommand: 'run build'
+    # - task: Npm@1
+    #   displayName: '[static] npm run test'
+    #   inputs:
+    #     command: custom
+    #     workingDir: client/static
+    #     verbose: false
+    #     customCommand: 'run build:test'
+    # - task: Npm@1
+    #   displayName: '[static] npm run build'
+    #   inputs:
+    #     command: custom
+    #     workingDir: client/static
+    #     verbose: false
+    #     customCommand: 'run build:ts'
