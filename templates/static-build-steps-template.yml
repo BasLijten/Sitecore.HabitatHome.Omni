@@ -1,15 +1,29 @@
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+# - task: NodeTool@0
+#   inputs:
+#     versionSpec: '10.x'
+#   displayName: 'Install Node.js'
 
-- script: |
-    cd fitness/app
-    npm install
-    npm run jss build
-#    npm run jss "setup --instancePath c:\bla --layoutServiceHost https://sitecore9 --apiKey bla"
-  displayName: 'npm install and jss setup'
+# - script: |
+#     cd fitness/app
+#     npm install
+#     npm run jss build
+# #    npm run jss "setup --instancePath c:\bla --layoutServiceHost https://sitecore9 --apiKey bla"
+#   displayName: 'npm install and jss setup'
+
+- task: Npm@1
+  displayName: 'npm install'
+  inputs: 
+    workingDir: fitness/app
+    verbose: false
+- task: Npm@1
+  displayName: 'npm run jss build'
+  inputs:
+    command: custom
+    workingDir: fitness/app
+    verbose: false
+    customCommand: 'run jss build'
+
 
 # - task: PublishPipelineArtifact@0
 #   inputs:
