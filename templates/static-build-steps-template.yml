@@ -1,7 +1,7 @@
 parameters:
   artifactName: ''
 
-steps:
+
 # - task: NodeTool@0
 #   inputs:
 #     versionSpec: '10.x'
@@ -13,7 +13,7 @@ steps:
 #     npm run jss build
 # #    npm run jss "setup --instancePath c:\bla --layoutServiceHost https://sitecore9 --apiKey bla"
 #   displayName: 'npm install and jss setup'
-
+steps:
 - task: Npm@1
   displayName: 'npm install'
   inputs: 
@@ -26,8 +26,8 @@ steps:
     workingDir: fitness/app
     verbose: false
     customCommand: 'run jss build'
-- publish: fitness/app/build
-  name: '${{ parameters.artifactName }}'
+# - publish: fitness/app/build
+#   name: '${{ parameters.artifactName }}'
 
 # - task: PublishPipelineArtifact@0
 #   inputs:
