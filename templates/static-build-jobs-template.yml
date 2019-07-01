@@ -1,6 +1,7 @@
 parameters:
   name: ''
   vmImage: ''
+  artifactName: ''
 
 jobs:
 - job: '${{ parameters.name }}'
@@ -8,3 +9,5 @@ jobs:
     vmImage: '${{ parameters.vmImage }}'
   steps:
   - template: static-build-steps-template.yml
+    parameters: 
+      artifactName: '${{ parameters.artifactName }}'

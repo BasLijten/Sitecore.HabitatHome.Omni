@@ -13,42 +13,52 @@ stages:
     parameters:
       name: BuildFrontEndUbuntu1
       vmImage: 'ubuntu-latest'
+      artifactName: '1'
   - template: templates/static-build-jobs-template.yml
     parameters:
       name: BuildFrontEndUbuntu2
       vmImage: 'ubuntu-latest'
+      artifactName: '2'
   - template: templates/static-build-jobs-template.yml
     parameters:
       name: BuildFrontEndUbuntu3
       vmImage: 'ubuntu-latest'
+      artifactName: '3'
   - template: templates/static-build-jobs-template.yml
     parameters:
       name: BuildFrontEndUbuntu4
       vmImage: 'ubuntu-latest'
+      artifactName: '4'
   - template: templates/static-build-jobs-template.yml
     parameters:
       name: BuildFrontEndUbuntu5
       vmImage: 'ubuntu-latest'
+      artifactName: '5'
   - template: templates/static-build-jobs-template.yml
     parameters:
       name: BuildFrontEndWindows1
       vmImage: 'vs2017-win2016'
+      artifactName: '6'
   - template: templates/static-build-jobs-template.yml
     parameters:
       name: BuildFrontEndWindows2
       vmImage: 'vs2017-win2016'
+      artifactName: '7'
   - template: templates/static-build-jobs-template.yml
     parameters:
       name: BuildFrontEndWindows3
       vmImage: 'vs2017-win2016'
+      artifactName: '8'
   - template: templates/static-build-jobs-template.yml
     parameters:
       name: BuildFrontEndWindows4
       vmImage: 'vs2017-win2016'
+      artifactName: '9'
   - template: templates/static-build-jobs-template.yml
     parameters:
       name: BuildFrontEndWindows5
       vmImage: 'vs2017-win2016'
+      artifactName: '10'
 
 
   # - job: Linux
