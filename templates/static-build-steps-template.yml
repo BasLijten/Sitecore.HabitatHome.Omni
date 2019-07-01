@@ -26,6 +26,11 @@ steps:
     workingDir: fitness/app
     verbose: false
     customCommand: 'run jss build'
+- task: PublishPipelineArtifact@1
+  inputs:
+    path: fitness/app/build
+    artifact: '${{ parameters.artifactName }}'
+
 # - publish: fitness/app/build
 #   name: '${{ parameters.artifactName }}'
 
